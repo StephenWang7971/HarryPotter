@@ -82,6 +82,13 @@ def find_best_solution(cart):
         strategies.append(strategy);
     return strategies;
 
+def count_best_price(cart):
+    strategies = find_best_solution(cart);
+    so = StrategyOptimizer();
+    strategies = so.optimize(strategies)
+    price = count_price(strategies);
+    print(price);
+
 if __name__ == '__main__':
     item_1 = Item(Book("#1.", "Philosophy Stone", 8), 2);
     item_2 = Item(Book("#2.", "Secret Chamber", 8), 2);
@@ -95,9 +102,6 @@ if __name__ == '__main__':
     cart.add_item(item_3);
     cart.add_item(item_4);
     cart.add_item(item_5);
+
+    count_best_price(cart);
     
-    strategies = find_best_solution(cart);
-    so = StrategyOptimizer();
-    strategies = so.optimize(strategies)
-    price = count_price(strategies);
-    print(price);
