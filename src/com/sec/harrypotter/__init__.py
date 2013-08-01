@@ -23,6 +23,10 @@ class Strategy:
             price += item.book.price;
         return price;
 
+    def count(self):
+        return len(self.items);
+    
+
 class StrategyOptimizer:
     def optimize(self, strategies):
         found = False;
@@ -33,7 +37,19 @@ class StrategyOptimizer:
         return strategies;
 
     def replace_53_with_44(self, strategies):
+        strategyMap = {};
+        for i in range(0, len(strategies)):
+            strategy = strategies[i];
+            strategyMap[strategy.count()] = i;
+
+        if (strategyMap[5] != None and strategyMap[3] != None):
+            self.move_book(strategies[strategyMap[5]], strategies[strategyMap[3]]);
+        
         return False;
+
+    def move_book(self, source, dest):
+        print("->");
+        return;
 
 class Book:
     def __init__(self, index, name, price):
