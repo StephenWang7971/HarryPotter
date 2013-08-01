@@ -17,7 +17,13 @@ class Strategy:
         return 1.0;
 
     def get_price(self):
-        return 8 * self.rate * len(self.items);
+        return self.total_price() * self.rate;
+
+    def total_price(self):
+        price = 0.0;
+        for item in self.items:
+            price += item.book.price;
+        return price;
 
 class StrategyOptimizer:
     def optimize(self, strategies):
