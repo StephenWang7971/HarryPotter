@@ -1,16 +1,16 @@
 class Strategy:
     def __init__(self, items):
         self.items = items;
-        self.rate = self.get_discount_rate(items);
+        self.rate = self.get_discount_rate();
    
-    def get_discount_rate(self, items):
-        if len(items) == 5:
+    def get_discount_rate(self):
+        if len(self.items) == 5:
             return 0.75;
-        if len(items) ==  4:
+        if len(self.items) ==  4:
             return 0.8;
-        if len(items) ==  3:
+        if len(self.items) ==  3:
             return 0.9;
-        if len(items) == 2:
+        if len(self.items) == 2:
             return 0.95;
         return 1.0;
 
@@ -38,18 +38,32 @@ class StrategyOptimizer:
 
     def replace_53_with_44(self, strategies):
         strategyMap = {};
+        strategyMap.clear();
         for i in range(0, len(strategies)):
             strategy = strategies[i];
             strategyMap[strategy.count()] = i;
 
-        if (strategyMap[5] != None and strategyMap[3] != None):
-            self.move_book(strategies[strategyMap[5]], strategies[strategyMap[3]]);
-        
+        if (strategyMap != None and len(strategyMap) != 0):
+            if (strategyMap.get(5, None) != None and strategyMap.get(3, None) != None):
+                self.move_book(strategies[strategyMap[5]], strategies[strategyMap[3]]);
+                return True;
         return False;
 
     def move_book(self, source, dest):
-        print("->");
+        item = self.findAnyDiff(source, dest);
+        if item == None:
+            return;
+        source.items.remove(item);
+        source.rate = source.get_discount_rate();
+        dest.items.extend([item]);
+        dest.rate = source.get_discount_rate();
         return;
+    
+    def findAnyDiff(self, source, dest):
+        for item in source.items:
+            if item not in dest.items:
+                return item;
+        return None;
 
 class Book:
     def __init__(self, index, name, price):
