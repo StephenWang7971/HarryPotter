@@ -10,6 +10,15 @@ def get_discount_rate(items):
         return 0.95;
     return 1.0;
 
+class Strategy:
+    items = [];
+    def __init__(self, items):
+        self.items = items;
+
+class StrategyOptimizer:
+    def optimize(self, strategies):
+        return strategies;
+
 class Book:
     index = "#0";
     name = "";
@@ -48,15 +57,20 @@ def is_empty(cart):
             return False;
     return True;
 
+def count_price(strategies):
+    price = 0;
+    for s in strategies:
+        price += len(s.items) * 8 * get_discount_rate(s.items);
+    return price;
+
 def find_best_solution(cart):
     strategies = [];
     price = 0.0;
     while not is_empty(cart):
         items = pick_most_books(cart);
-        strategies.append(items);
-        rate = get_discount_rate(items);
-        price += 8 * len(items) * rate;
-    return price;
+        strategy = Strategy(items);
+        strategies.append(strategy);
+    return strategies;
 
 if __name__ == '__main__':
     item_1 = Item(Book("#1.", "Philosophy Stone", 8), 2);
@@ -72,7 +86,8 @@ if __name__ == '__main__':
     cart.add_item(item_4);
     cart.add_item(item_5);
     
-    price = find_best_solution(cart);
-    '''replace 5-3 with 4-4 strategies'''
-    '''count_price(strategies)'''
+    strategies = find_best_solution(cart);
+    so = StrategyOptimizer();
+    strategies = so.optimize(strategies)
+    price = count_price(strategies);
     print(price);
