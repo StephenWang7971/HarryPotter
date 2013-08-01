@@ -1,6 +1,4 @@
 class Strategy:
-    items = [];
-    rate = 1.0;
     def __init__(self, items):
         self.items = items;
         self.rate = self.get_discount_rate(items);
@@ -30,9 +28,6 @@ class StrategyOptimizer:
         return strategies;
 
 class Book:
-    index = "#0";
-    name = "";
-    price = 8;
     def __init__(self, index, name, price):
         self.index = index;
         self.name = name
@@ -42,12 +37,9 @@ class Item:
     def __init__(self, book, count):
         self.book = book
         self.count = count
-        
-    book = Book,
-    count = 0;
 
 class Cart:
-    items = []
+    items = [];
     def add_item(self, item):
         self.items.append(item);
 
