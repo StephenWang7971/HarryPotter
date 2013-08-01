@@ -1,19 +1,23 @@
-
-def get_discount_rate(items):
-    if len(items) == 5:
-        return 0.75;
-    if len(items) ==  4:
-        return 0.8;
-    if len(items) ==  3:
-        return 0.9;
-    if len(items) == 2:
-        return 0.95;
-    return 1.0;
-
 class Strategy:
     items = [];
+    rate = 1.0;
     def __init__(self, items):
         self.items = items;
+        self.rate = self.get_discount_rate(items);
+   
+    def get_discount_rate(self, items):
+        if len(items) == 5:
+            return 0.75;
+        if len(items) ==  4:
+            return 0.8;
+        if len(items) ==  3:
+            return 0.9;
+        if len(items) == 2:
+            return 0.95;
+        return 1.0;
+
+    def get_price(self):
+        return 8 * self.rate * len(self.items);
 
 class StrategyOptimizer:
     def optimize(self, strategies):
@@ -60,7 +64,7 @@ def is_empty(cart):
 def count_price(strategies):
     price = 0;
     for s in strategies:
-        price += len(s.items) * 8 * get_discount_rate(s.items);
+        price += s.get_price();
     return price;
 
 def find_best_solution(cart):
