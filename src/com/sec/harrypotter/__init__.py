@@ -25,7 +25,15 @@ class Strategy:
 
 class StrategyOptimizer:
     def optimize(self, strategies):
+        found = False;
+        while True:
+            found = self.replace_53_with_44(strategies);
+            if not found:
+                break;
         return strategies;
+
+    def replace_53_with_44(self, strategies):
+        return False;
 
 class Book:
     def __init__(self, index, name, price):
